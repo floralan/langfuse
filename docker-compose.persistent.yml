@@ -93,7 +93,9 @@ services:
       CLICKHOUSE_DB: default
       CLICKHOUSE_USER: ${CLICKHOUSE_USER:-clickhouse}
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-clickhouse} # CHANGEME
-    # Volumes removed - ClickHouse will start fresh each time
+    volumes:
+      - langfuse_clickhouse_data:/var/lib/clickhouse
+      - langfuse_clickhouse_logs:/var/log/clickhouse-server
     ports:
       - 127.0.0.1:8123:8123
       - 127.0.0.1:9002:9000
@@ -160,6 +162,10 @@ services:
 
 volumes:
   langfuse_postgres_data:
+    driver: local
+  langfuse_clickhouse_data:
+    driver: local
+  langfuse_clickhouse_logs:
     driver: local
   langfuse_minio_data:
     driver: local
